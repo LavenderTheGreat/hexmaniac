@@ -1,6 +1,19 @@
-![Hex Maniac: Colours for (in)sane people](https://i.imgur.com/62wNF4q.png)
+![Hex Maniac: Colours for (in)sane people](https://i.imgur.com/WRgfria.png)
+# Features
+- Convert from hex colours in three formats (RGB, RGBA and RGB with an 0-1 opacity value).
+- Under 1KB.
+- Under the unlicense, allowing you to do anything with the code.
+- Has 4 versions, one for each version of Love's colour formatting, plus another for each that is even smaller.
 
-![Functions list: hex.rgb(string): Converts the hex string to Love2D colours, hex.rgbo: Converts a hex string plus a 0 to 1 opacity value to the Love2D format, hex.rgba(string): Converts the RGBA hex string to Love2D colours.](https://i.imgur.com/mjYh3bl.png)
+# Usage
+```lua
+local hex = require("hexmaniac") --Require the library
 
-![Also: This entire library is under 1kb non minified and it’s under the unlicense, which means you don't need to give credit and you can modify it freely. There are also different versions: Vanilla for 11.0+ (hexmaniac.lua), One for old versions of Love2D (hexmaniacold.lua)
-and minified versions (.min.lua) of both.](https://i.imgur.com/76niLhn.png)
+function love.draw()
+  love.graphics.setColor(hex.rgb('4f5268')) --Set to colour #4f5268
+  love.graphics.rectangle('fill', 0, 0, 50, 50)
+  love.graphics.setColor(hex.rgbo('4f5268', 0.9)) --Set to colour #4f5268 with an opacity of 0.9
+  love.graphics.rectangle('fill', 0, 50, 50, 50)
+  love.graphics.setColor(hex.rgba('4f526899')) --Set to colour #4f526899
+  love.graphics.rectangle('fill', 0, 100, 50, 50)
+end```
