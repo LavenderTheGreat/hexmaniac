@@ -23,4 +23,4 @@ function f.rgbo(s, opacity)
         opacity*255
     }
 end
-return func
+return f
