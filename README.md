@@ -3,7 +3,8 @@
 - Convert from hex colours in three formats (RGB, RGBA and RGB with an 0-1 opacity value).
 - Under 1KB.
 - Under the unlicense, allowing you to do anything with the code.
-- Has 4 versions, one for each version of Love's colour formatting, plus another for each that is even smaller.
+- Identifies which version of Love you are using and uses the correct conversion
+- Has 2 versions, one minifed for all that compression goodness.
 
 # Usage
 ```lua
