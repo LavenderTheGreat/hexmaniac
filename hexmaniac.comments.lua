@@ -76,7 +76,7 @@ func = setmetatable(func, {
             elseif length == 8 then
                 return func.rgba(code)
             else
-                love.errorhandler("invalid argument")
+                error("invalid argument")
             end
         end
 
