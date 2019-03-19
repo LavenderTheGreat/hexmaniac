@@ -1,8 +1,8 @@
 --Hex Maniac by LavenderTheGreat, feel free to remove this for compression purposes.
 local func = {}
 
-local split = function (str, start, stop) 
-    return tonumber(string.sub(str, start, stop), 16)
+local split = function (str, start) 
+    return tonumber(string.sub(str, start, start+1), 16)
 end
 
 local convert = function (num)
@@ -13,14 +13,10 @@ local convert = function (num)
     end
 end
 
-local apply = function (str, start, stop)
-    return convert(split(str, start, stop))
-end
-
 func.rgb = function (stringToLove)
     local color = {}
     for i=1, 5, 2 do
-        table.insert(color, apply(stringToLove, i, i+1))
+        table.insert(color, convert(split(stringToLove, i)))
     end
     return color
 end
@@ -32,7 +28,26 @@ func.rgbo = function (stringToLove, opacity)
 end
 
 func.rgba = function (stringToLove)
-    return func.rgbo(string.sub(stringToLove, 1, 6), apply(stringToLove, 7, 8))
+    return func.rgbo(string.sub(stringToLove, 1, 6), convert(split(stringToLove, 7, 8)))
 end
+
+func = setmetatable(func, {
+    __call = function (f, code, opacity)
+        -- If there is no opacity given, then expect form of AABBCC or AABBCCDD
+        if opacity == nil then
+            length = string.len(code)
+            -- RRGGBB
+            if length == 6 then 
+                return func.rgb(code)
+            -- RRGGBBAA
+            elseif length == 8 then
+                return func.rgba(code)
+            else
+                love.errorhandler("invalid argument")
+            end
+        end
+        return func.rgbo(code, opacity)
+    end
+})
 
 return func

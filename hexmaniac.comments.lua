@@ -32,7 +32,7 @@ end
 func.rgb = function (stringToLove)
     local color = {}
     for i=1, 5, 2 do
-        table.insert(color, convert(split(stringToLove, i))
+        table.insert(color, convert(split(stringToLove, i)))
     end
     return color
 end
@@ -55,7 +55,32 @@ end
 --              [1] (string) stringToLove: the hex color code
 -- Return: (table): a table of values usable by LOVE
 func.rgba = function (stringToLove)
-    return func.rgbo(string.sub(stringToLove, 1, 6), convert(split(stringToLove, 7))
+    return func.rgbo(string.sub(stringToLove, 1, 6), convert(split(stringToLove, 7)))
 end
 
+-- Function: func
+-- Usage: Simple interface for library
+-- Parameters:
+--              [1] (string) code: the hex color code
+--              [2] (number) opacity: optional
+-- Return: (table): a table of values usable by LOVE
+func = setmetatable(func, {
+    __call = function (f, code, opacity)
+        -- If there is no opacity given, then expect form of AABBCC or AABBCCDD
+        if opacity == nil then
+            length = string.len(code)
+            -- RRGGBB
+            if length == 6 then 
+                return func.rgb(code)
+            -- RRGGBBAA
+            elseif length == 8 then
+                return func.rgba(code)
+            else
+                love.errorhandler("invalid argument")
+            end
+        end
+
+        return func.rgbo(code, opacity)
+    end
+})
 return func
