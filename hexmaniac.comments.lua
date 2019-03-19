@@ -24,6 +24,17 @@ local convert = function (num)
     end
 end
 
+-- Function: clamp
+-- Usage: Clamps a number between a minimum and a maximum
+-- Parameters:
+--              [1] (number) num: number to clamp
+--              [2] (number) low: the lower end of the clamp
+--              [3] (number) high: the higher end of the clamp
+-- Return (number): the number after clamping
+local clamp = function (num, low, high)
+    return math.min(math.max(low, num), high)
+end
+
 -- Function: func.rgb
 -- Usage: Converts Hex RGB color codes to a table usable by LOVE
 -- Parameters:
@@ -45,7 +56,7 @@ end
 -- Return: (table): a table of values usable by LOVE
 func.rgbo = function (stringToLove, opacity)
     local color = func.rgb(stringToLove)
-    table.insert(color, opacity)
+    table.insert(color, clamp(opacity, 0, 1))
     return color
 end
 
@@ -55,7 +66,9 @@ end
 --              [1] (string) stringToLove: the hex color code
 -- Return: (table): a table of values usable by LOVE
 func.rgba = function (stringToLove)
-    return func.rgbo(string.sub(stringToLove, 1, 6), convert(split(stringToLove, 7)))
+    local color = func.rgb(string.sub(stringToLove, 1, 6))
+    table.insert(color, convert(split(stringToLove, 7)))
+    return color
 end
 
 -- Function: func

@@ -13,6 +13,10 @@ local convert = function (num)
     end
 end
 
+local clamp = function (num, low, high)
+    return math.min(math.max(low, num), high)
+end
+
 func.rgb = function (stringToLove)
     local color = {}
     for i=1, 5, 2 do
@@ -23,23 +27,22 @@ end
 
 func.rgbo = function (stringToLove, opacity)
     local color = func.rgb(stringToLove)
-    table.insert(color, opacity)
+    table.insert(color, clamp(opacity, 0, 1))
     return color
 end
 
 func.rgba = function (stringToLove)
-    return func.rgbo(string.sub(stringToLove, 1, 6), convert(split(stringToLove, 7, 8)))
+    local color = func.rgb(string.sub(stringToLove, 1, 6))
+    table.insert(color, convert(split(stringToLove, 7)))
+    return color
 end
 
 func = setmetatable(func, {
     __call = function (f, code, opacity)
-        -- If there is no opacity given, then expect form of AABBCC or AABBCCDD
         if opacity == nil then
             length = string.len(code)
-            -- RRGGBB
             if length == 6 then 
                 return func.rgb(code)
-            -- RRGGBBAA
             elseif length == 8 then
                 return func.rgba(code)
             else
