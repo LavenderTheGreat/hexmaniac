@@ -17,7 +17,8 @@ function love.draw()
   love.graphics.rectangle('fill', 0, 50, 50, 50)
   love.graphics.setColor(hex.rgba('4f526899')) --Set to colour #4f526899
   love.graphics.rectangle('fill', 0, 100, 50, 50)
-end```
+end
+```
 
 Alternatively you can just call `hex()` directly, be warned however, there may be bugs
 
@@ -31,4 +32,5 @@ function love.draw()
   love.graphics.rectangle('fill', 0, 50, 50, 50)
   love.graphics.setColor(hex('4f526899')) --Set to colour #4f526899
   love.graphics.rectangle('fill', 0, 100, 50, 50)
-end```
+end
+```
